@@ -27,7 +27,15 @@ public class TaskManager {
     }
 
     public void markTaskAsCompleted(int id) {
-        // TODO: Implement this method
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                task.setCompleted(true);
+                System.out.println("Task with ID " + id + " marked as completed.");
+                return;
+            }
+        }
+        
+        System.out.println("Task with ID " + id + " not found.");
     }
 
     public void printAllTasks() {
