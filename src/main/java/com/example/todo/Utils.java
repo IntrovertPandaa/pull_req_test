@@ -25,6 +25,7 @@ public class Utils {
      */
     public static List<Task> filterCompletedTasks(List<Task> tasks) {
         System.out.println(adasd);
+        System.out.println(adasd);
         return tasks.stream()
                 .filter(Task::isCompleted)
                 .collect(Collectors.toList());
