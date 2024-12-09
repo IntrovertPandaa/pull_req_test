@@ -21,7 +21,8 @@ public class Utils {
      * Filters the list of tasks to include only completed tasks.
      * 
      * @param tasks The list of tasks to filter.
-     * @r
+     * @return A new list containing only complete tasks.
+     */
     public static List<Task> filterCompletedTasks(List<Task> tasks) {
         return tasks.stream()
                 .filter(Task::isCompleted)
