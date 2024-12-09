@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - main
-      - dev  # Add other branches if needed
+      - dev
   push:
     branches:
       - main
@@ -12,10 +12,11 @@ on:
 
 jobs:
   static-analysis:
+    name: Run Static Code Analysis
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Check out the code
+    # Step 1: Check out the repository
     - name: Checkout code
       uses: actions/checkout@v3
 
@@ -24,19 +25,20 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: 17
+        distribution: 'temurin'
 
-    # Step 3: Install Checkstyle
+    # Step 3: Download Checkstyle
     - name: Download Checkstyle
       run: wget -q https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.0/checkstyle-10.12.0-all.jar -O checkstyle.jar
 
-    # Step 4: Run Checkstyle
+    # Step 4: Run Checkstyle on Java code
     - name: Run Checkstyle
       run: java -jar checkstyle.jar -c /google_checks.xml src/main/java
 
-    # Step 5: Archive Checkstyle Reports (optional)
-    - name: Upload Checkstyle Results
+    # Step 5: Fail the workflow if Checkstyle detects issues
+    - name: Archive Checkstyle Results
       if: failure()
       uses: actions/upload-artifact@v3
       with:
-        name: checkstyle-results
+        name: checkstyle-report
         path: checkstyle-result.xml
