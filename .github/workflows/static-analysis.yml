@@ -1,4 +1,4 @@
-name: Static Code Analysis
+name: Static Code Analysis with Compilation
 
 on:
   pull_request:
@@ -27,18 +27,14 @@ jobs:
         java-version: 17
         distribution: 'temurin'
 
-    # Step 3: Download Checkstyle
+    # Step 3: Compile the code
+    - name: Compile the code
+      run: javac src/main/java/com/example/todo/*.java
+
+    # Step 4: Download Checkstyle
     - name: Download Checkstyle
       run: wget -q https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.0/checkstyle-10.12.0-all.jar -O checkstyle.jar
 
-    # Step 4: Run Checkstyle on Java code
+    # Step 5: Run Checkstyle on Java code
     - name: Run Checkstyle
       run: java -jar checkstyle.jar -c /google_checks.xml src/main/java
-
-    # Step 5: Fail the workflow if Checkstyle detects issues
-    - name: Archive Checkstyle Results
-      if: failure()
-      uses: actions/upload-artifact@v3
-      with:
-        name: checkstyle-report
-        path: checkstyle-result.xml
