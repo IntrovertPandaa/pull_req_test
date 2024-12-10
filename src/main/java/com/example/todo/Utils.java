@@ -36,6 +36,7 @@ public class Utils {
      * @return A new list containing only incomplete tasks.
      */
     public static List<Task> filterIncompleteTasks(List<Task> tasks) {
+        System.out.println("asdasdas");
         return tasks.stream()
                 .filter(task -> !task.isCompleted())
                 .collect(Collectors.toList());
